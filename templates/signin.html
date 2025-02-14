@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'favicon.png' %}" rel="icon" type="image/png">
+    <title>Pagina principal</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body class="logear-body">
+    <!-- Header-->
+    <div class="logear-header">
+        <b><h1>「CA」 Colombia ER:LC </h1></b>
+        <a href="/signup" class="logear-btn-registro">Registrarse</a>
+    </div>
+
+    <!-- Contenido principal container-->
+    <div class="logear-contenido">
+        <h1> Entrar</h1>
+        <!-- Forms-->
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Nombre" class="logear-form-nombre" required>
+            <input type="password" name="password" placeholder="Contraseña" class="logear-form-contraseña" required>
+            <!-- Boton-->
+            <button type="submit" class="logear-btn-entrar">Entrar</button>
+            <!-- Mensaje de error / confirmacion -->
+            <div class="logear-mensaje-error">
+                {% if messages %}
+                    {% for message in messages %}
+                    <h5>{{ message }}</h5>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <p> No estas registrado? <a href="/signup"> Crea una cuenta </a></p>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer-->
+    <footer>
+        <p> ©️ Todos los derechos reservados, leyui (Programadora)</p>
+        <p> ©️ Todos los derechos reservados, 「CA」 Colombia ER:LC</p>
+    </footer>
+    
+    <!-- Scripts
+    ================================================== -->
+    <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>
+
+</body>
+</html>

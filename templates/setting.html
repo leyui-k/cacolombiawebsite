@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'favicon.png' %}" rel="icon" type="image/png">
+    <title>Configuracion</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+</head>
+
+<body class="config-body">
+    <!-- Header-->
+    <div class="config-header"> 
+        <h1>Configuración</h1>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown()">
+                <img src="{{ MEDIA_URL }}{{ user_profile.profileimg.url }}" alt="Perfil" class="perfil-icon">
+                {{ user.username }}
+            </button>
+            <div class="dropdown-contenido" id="dropdown-contenido">
+                <a id="volver" href="/">Volver</a>
+                <a id="cuenta" href="/profile/{{user.username}}">Cuenta</a>
+                <a id="salir" href="/logout">Salir</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contenido-->
+    <div class="config-contenido">
+        <!-- Filtros -->
+        <div class="lista-config">
+            <h3><b>General</b></h3>
+            <ul>
+                <li><a href="#profile" onclick="showSection('profile')" class="active-section">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    Cuenta
+                </a></li>
+            </ul>
+        </div>
+        <!-- Caja principal para perfil filtro -->
+        <div class="config-perfil" id="profile">
+            <!-- Forms -->
+            <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="config-orden">
+                    <div class="perfil-pic-container">
+                        <!-- Foto de perfil -->
+                        <b><p>Foto de perfil</p>
+                            <div class="perfil-pic-caja">
+                                <img id="perfil-pic" src="{{ MEDIA_URL }}{{user_profile.profileimg.url}}" onclick="document.getElementById('perfil-pic-input').click();" />
+                                <img id="perfil-pic-preview">
+                                <input type="file" id="perfil-pic-input" name="image" accept="image/*" style="display: none;">
+                            </div>
+                        </b>
+                        
+                        <!-- Foto del banner -->
+                        <b><p>Banner de perfil</p>
+                            <div class="perfil-banner-caja">
+                                <img id="banner-pic" src="{{ MEDIA_URL }}{{user_profile.bannerimg.url}}" onclick="document.getElementById('banner-pic-input').click();" />
+                                <img id="banner-pic-preview">
+                                <div id="banner-crop-container" style="display: none;">
+                                    <img id="banner-crop-image" style="max-width: 100%;">
+                                </div>
+                                <input type="file" id="banner-pic-input" name="banner_image" accept="image/*" style="display: none;">
+                            </div>
+                            <button type="button" id="crop-banner-btn" style="display: none;">Recortar</button>
+                        </b>
+                    </div>
+
+                    <!-- Forms nombre -->
+                    <label for="username"><b>Nombre de usuario</b></label>
+                    <input name="username" type="text" id="username" value="{{ user_profile.user.username }}" class="config-username" required minlength="2" maxlength="16" pattern="^[a-zA-Z_]+$" title="El nombre de usuario solo puede contener letras y guiones bajos.">
+                    
+                    <!-- Form email -->
+                    <label for="email"><b>Email</b></label>
+                    <input name="email" type="email" id="email" value="{{ user_profile.user.email }}" class="config-email" required>
+                    
+                    <!-- Form bio -->
+                    <label for="about"><b>Descripcion</b></label>  
+                    <textarea id="about" name="bio" rows="3" maxlength="100">{{user_profile.bio|truncatechars:100}}</textarea>
+
+                    <!-- Form locacion -->
+                    <label for="location"><b>Locacion</b></label>
+                    <input name="location" type="text" id="buscar-pais" placeholder="Escribe tu país" list="paises-opciones" value="{{ user_profile.location }}">
+                    <datalist id="paises-opciones">
+                        <option value="" disabled selected>Selecciona tu país</option>
+                    </datalist>
+
+                    <!-- Discord -->
+                    <div class="discord">
+                        <label for="discord"><b>Discord</b></label>
+                        {% if user_profile.discord_username %}
+                            <p>Conectado como: <bold>{{ user_profile.discord_username }}</bold></p>
+                            <a href="{% url 'discord_unlink' %}" class="config-btn">Desconectar Discord</a>
+                        {% else %}
+                            <a href="{% url 'discord_login' %}" class="config-btn">Conectar Discord</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Botones -->
+                <div>
+                    <a href="/profile/{{user_profile.user.username}}" class="config-btn">Cancelar</a>
+                    <button type="submit" class="config-btn"> Guardar </button>
+                    <button type="button" class="borrar-cuenta-btn" onclick="confirmDelete()">Eliminar cuenta</button>
+                </div>
+                <!-- Mensaje de confirmacion / error -->
+                <div class="logear-mensaje-error">
+                    {% if messages %}
+                        {% for message in messages %}
+                        <h5>{{ message }}</h5>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </form>
+            <!-- Formulario para borrar cuenta -->
+            <form id="borrar-cuenta-form" action="{% url 'delete_account' %}" method="POST" style="display: none;">
+                {% csrf_token %}
+            </form>
+
+        </div>
+
+        <!-- PROXIMAMENTE
+        <div class="" id="security" style="display:none;">
+        </div>
+
+        <div class="" id="notifications" style="display:none;">
+        </div> -->
+        
+    </div>
+
+ <!-- Scripts
+    ================================================== -->
+    <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>  
+    <script src="{% static 'assets/js/config.js' %}"></script>
+
+</body>
+</html>
