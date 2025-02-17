@@ -152,29 +152,23 @@
 					<!-- Descripcion del post -->
 					{% if post.caption %}
 					<div class="perfil-post-caption">
-						<ul>
-							<p>{{post.caption}}</p>
-						</ul>
+						<p>{{post.caption}}</p>
 					</div>
 					{% endif %}
 					<!-- Imagen de la publicacion -->
-					<div>
-						<ul>
-							<div class="perfil-posts">
-								<!-- Controlador de video o gif -->
-								{% if post.video %} {% if post.is_gif %}
-									<img href="{{ post.image.url }}" src="{{ post.image.url }}">
-								{% else %}
-									<video controls href="{{ post.video.url }}">
-										<source src="{{ post.video.url }}" type="video/mp4">
-									</video>
-								{% endif %}
-								<!-- Controlador de imagen -->					
-								{% elif post.image %}
-									<img href="{{ post.image.url }}" src="{{ post.image.url }}">
-								{% endif %}
-							</div>
-						</ul>
+					<div class="perfil-posts">
+						<!-- Controlador de video o gif -->
+						{% if post.video %} {% if post.is_gif %}
+							<img href="{{ post.image.url }}" src="{{ post.image.url }}">
+						{% else %}
+							<video controls href="{{ post.video.url }}">
+								<source src="{{ post.video.url }}" type="video/mp4">
+							</video>
+						{% endif %}
+						<!-- Controlador de imagen -->					
+						{% elif post.image %}
+							<img href="{{ post.image.url }}" src="{{ post.image.url }}">
+						{% endif %}
 					</div>
 					<!-- Caja inferior -->
 					<div class="perfil-post-bottom">
