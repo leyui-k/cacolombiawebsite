@@ -12,80 +12,99 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body class="busqueda-body">
+<body>
+    <div class="l-body" id="search-b">
+        <!-- Header -->
+        <header class="busqueda-header">
+            <form class="busqueda-caja-header" action="search" method="POST" onsubmit="return validateSearch()">
+            {% csrf_token %}
+                <input type="text" name="username" placeholder="Busqueda">&nbsp; &nbsp;
+            </form>
+            <h4>CA COLOMBIA</h4>
+            <!-- Perfil -->
+            <div class="dropdown" id="header-pc">
+                <button class="dropbtn" onclick="toggleDropdown()">
+                    <img src="{{ MEDIA_URL }}{{ user_profile.profileimg.url }}" alt="Perfil" class="perfil-icon">
+                    {{ user_profile.user.username }}
+                </button>
+                <div class="dropdown-contenido" id="dropdown-contenido">
+                    <a id="cuenta" href="/profile/{{user.username}}">Cuenta</a>
+                    <a id="volver" href="/">Volver</a>
+                    <a id="salir" href="/logout">Salir</a>
+                </div>
+            </div>
+        </header>
 
-<!-- Header -->
-<header class="busqueda-header">
-    <form class="busqueda-caja-header" action="search" method="POST" onsubmit="return validateSearch()">
-    {% csrf_token %}
-        <input type="text" name="username" placeholder="Busqueda">&nbsp; &nbsp;
-    </form>
+        <!-- Busqueda principal container -->
+        <div class="busqueda-contenido">
+            <!-- Busqueda categorias -->
+            <div class="lista-config" id="search-l">
+                <h3><b>Filtros</b></h3>
+                <ul>
+                    <li><a href="#personas" onclick="showSection('personas')" class="active-section">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor">
+                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+                            <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"></path>
+                            <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"></path> </g></svg>
+                        </svg>
+                        Personas
+                    </a></li>
+                </ul>
+            </div>
 
-    <!-- Perfil -->
-    <div class="dropdown">
-        <button class="dropbtn" onclick="toggleDropdown()">
-            <img src="{{ MEDIA_URL }}{{ user_profile.profileimg.url }}" alt="Perfil" class="perfil-icon">
-            {{ user_profile.user.username }}
-        </button>
-        <div class="dropdown-contenido" id="dropdown-contenido">
-            <a id="cuenta" href="/profile/{{user.username}}">Cuenta</a>
-            <a id="volver" href="/">Volver</a>
-            <a id="salir" href="/logout">Salir</a>
-        </div>
-    </div>
-</header>
-
-    <!-- Busqueda principal container -->
-    <div class="busqueda-contenido">
-        <!-- Busqueda categorias -->
-        <div class="lista-config">
-            <h3><b>Filtros</b></h3>
-            <ul>
-                <li><a href="#personas" onclick="showSection('personas')" class="active-section">
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor">
-                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
-                        <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"></path>
-                        <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"></path> </g></svg>
-                    </svg>
-                    Personas
-                </a></li>
-            </ul>
-        </div>
-
-        <!-- Perfiles container -->
-        <div class="busqueda-perfiles" id="personas">
-            <div class="config-orden">
-                <h2>Resultados</h2>
-                    <div class="busqueda-resultado">
-                        {% for users in username_profile_list %}
-                        <section class="busqueda-resultado-perfil">
-                            <a class="busqueda-perfil-img" href="/profile/{{users.user}}"><img src="{{users.profileimg.url}}"></a>
-                                <div class="busqueda-resultados-info">
-                                    <!-- Nombre -->
-                                    <h4 class="busqueda-perfil-user">
-                                        <a href="/profile/{{users.user}}">
-                                            <b>@{{users.user}} ({{ user_profile.discord_username }})</b>
-                                            {% if users.user.is_staff %} (Staff)
-                                            {% elif users.user.is_superuser %} (Admin)
-                                            {% endif %}
-                                        </a>
-                                    </h4>
-                                    <!-- Locacion -->
-                                    <p class="busqueda-locacion">
-                                        {{users.location}}{% if users.location %} - {% endif %}{{ users.followers_count }} 
-                                        {% if users.followers_count == 1 %}seguidor
-                                        {% else %}seguidores
-                                        {% endif %}</p>
-                                    <!-- Bio -->
-                                    <p class="busqueda-bio">{{users.bio|truncatechars:100}} </p>
-                                </div>
-                        </section>
-                        {% endfor %}
-                    </div>
+            <!-- Perfiles container -->
+            <div class="busqueda-perfiles" id="personas">
+                <div class="config-orden">
+                    <h2>Resultados</h2>
+                        <div class="busqueda-resultado">
+                            {% for users in username_profile_list %}
+                            <section class="busqueda-resultado-perfil">
+                                <a class="busqueda-perfil-img" href="/profile/{{users.user}}"><img src="{{users.profileimg.url}}"></a>
+                                    <div class="busqueda-resultados-info">
+                                        <!-- Nombre -->
+                                        <h4 class="busqueda-perfil-user">
+                                            <a href="/profile/{{users.user}}">
+                                                <b>@{{users.user}}</b>
+                                                {% if users.discord_username %} ({{ users.discord_username }})
+                                                {% endif %}
+                                                {% if users.user.is_staff %} (Staff)
+                                                {% elif users.user.is_superuser %} (Admin)
+                                                {% endif %}
+                                            </a>
+                                        </h4>
+                                        <!-- Locacion -->
+                                        <p class="busqueda-locacion">
+                                            {{users.location}}{% if users.location %} - {% endif %}{{ users.followers_count }} 
+                                            {% if users.followers_count == 1 %}seguidor
+                                            {% else %}seguidores
+                                            {% endif %}</p>
+                                        <!-- Bio -->
+                                        <p class="busqueda-bio">{{users.bio|truncatechars:100}} </p>
+                                    </div>
+                            </section>
+                            {% endfor %}
+                        </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Nav desde vista de telefonos -->
+	<footer class="nav-footer" id="nav-footer">
+        <div class="items-mb">
+        <!-- Perfil -->
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdownMB()">
+                    <img src="{{ MEDIA_URL }}{{ user_profile.profileimg.url }}" alt="Perfil" class="perfil-icon">
+                    {{ user_profile.user.username }}
+                </button>
+                <div class="dropdown-contenidoMB" id="dropdown-contenidoMB">
+                    <a id="cuenta" href="/settings">Configuracion</a>
+                    <a id="volver" href="/">Volver</a>
+                </div>
+            </div>
+        </div>
+    </footer>
  <!-- Scripts
     ================================================== -->
     <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>  

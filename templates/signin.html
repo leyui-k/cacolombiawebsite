@@ -13,41 +13,42 @@
 
 </head>
 
-<body class="logear-body">
-    <!-- Header-->
-    <div class="logear-header">
-        <b><h1>「CA」 Colombia ER:LC </h1></b>
-        <a href="/signup" class="logear-btn-registro">Registrarse</a>
-    </div>
+<body>
+    <div class="l-body" id="sign-b">
+        <!-- Header-->
+        <div class="logear-header">
+            <b><h1>「CA」 Colombia ER:LC </h1></b>
+            <a href="/signup" class="logear-btn-registro">Registrarse</a>
+        </div>
 
-    <!-- Contenido principal container-->
-    <div class="logear-contenido">
-        <h1> Entrar</h1>
-        <!-- Forms-->
-        <form action="" method="POST">
-            {% csrf_token %}
-            <input type="text" name="username" placeholder="Nombre" class="logear-form-nombre" required>
-            <input type="password" name="password" placeholder="Contraseña" class="logear-form-contraseña" required>
-            <!-- Boton-->
-            <button type="submit" class="logear-btn-entrar">Entrar</button>
-            <!-- Mensaje de error / confirmacion -->
-            <div class="logear-mensaje-error">
-                {% if messages %}
-                    {% for message in messages %}
-                    <h5>{{ message }}</h5>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div>
-                <p> No estas registrado? <a href="/signup"> Crea una cuenta </a></p>
-            </div>
-        </form>
+        <!-- Contenido principal container-->
+        <div class="logear-contenido">
+            <h1> Entrar</h1>
+            <!-- Forms-->
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Nombre" class="logear-form-nombre" required>
+                <input type="password" name="password" placeholder="Contraseña" class="logear-form-contraseña" required>
+                <!-- Boton-->
+                <button type="submit" class="logear-btn-entrar">Entrar</button>
+                <!-- Mensaje de error / confirmacion -->
+                <div class="logear-mensaje-error">
+                    {% if messages %}
+                        {% for message in messages %}
+                        <h5>{{ message }}</h5>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div>
+                    <p> No estas registrado? <a href="/signup"> Crea una cuenta </a></p>
+                </div>
+            </form>
+        </div>
     </div>
-
     <!-- Footer-->
     <footer>
-        <p> ©️ Todos los derechos reservados, leyui (Programadora)</p>
-        <p> ©️ Todos los derechos reservados, 「CA」 Colombia ER:LC</p>
+        <a href="https://discordapp.com/users/943008613193109514" target="_blank" id="sign-a"><p> ©️ Todos los derechos reservados, leyui (Programadora)</p></a>
+        <a href="https://discord.gg/cacolombiarp" target="_blank" id="sign-a"><p> ©️ Todos los derechos reservados, 「CA」 Colombia ER:LC</p></a>
     </footer>
     
     <!-- Scripts

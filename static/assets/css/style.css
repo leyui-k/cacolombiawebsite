@@ -68,7 +68,7 @@ label {
   transform: scale(1.02);
 }
 
-.dropdown-contenido {
+.dropdown-contenido, .dropdown-contenidoMB {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
@@ -81,14 +81,14 @@ label {
   line-height: 27px;
 }
 
-.dropdown-contenido a {
+.dropdown-contenido a, .dropdown-contenidoMB a {
   color: black;
   padding: 9px 16px;
   display: block;
   border-radius: 10px;
 }
 
-.dropdown-contenido a:hover {
+.dropdown-contenido a:hover, .dropdown-contenidoMB a:hover {
   background-color: #f1f1f1;
 }
 
@@ -103,7 +103,7 @@ label {
   display: block;
 }
 
-.items {
+.items, .items-mb {
   display: flex;
   align-items: center;
   gap: 50px;
@@ -120,9 +120,24 @@ label {
   vertical-align: middle
 }
 
+.l-body {
+  height: auto;
+  line-height: normal;
+}
+
+#sign-b {
+  height: 100%;
+}
+
+#nav-footer {
+  display: none;
+}
+
 /* HTML DE LA PAGINA DE LOGEARSE Y REGISTRARSE */
-.logear-body {
-  background-color: #242424;
+
+#sign-a {
+ color: white;
+ cursor: pointer;
 }
 
 .config-header, .busqueda-header, .logear-header, .perfil-header {
@@ -131,9 +146,7 @@ label {
   background-color: #333;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  padding-left: 40px;
-  padding-right: 30px;
+  padding: 10px 30px 10px 40px;
 }
 
 .logear-btn-registro {
@@ -180,7 +193,7 @@ label {
 
 .logear-mensaje-error {
   color: red;
-  margin: 0;
+  margin: 10px 0px 0px 0px;
 }
 
 .logear-form-nombre, .logear-form-contraseña, .logear-form-email {
@@ -210,13 +223,8 @@ label {
 
 /* HTML DE LA PAGINA PRINCIPAL */
 
-.index-body {
-  background-color: #242424;
-  line-height: 1;
-}
-
 .busqueda-header h4 {
-  font-size: 35px;
+  font-size: 33px;
 }
 
 .post-icon {
@@ -245,25 +253,25 @@ label {
   transform: scale(1.02);
 }
 
-.subir-post-dropdown, .dropdown-notificaciones, .post-dropdown-contenido, .com-dropdown-contenido {
+.subir-post-dropdown, .dropdown-notificaciones, .post-dropdown-contenido, .com-dropdown-contenido, .subir-post-dropdownMB, .dropdown-notificacionesMB {
   background-color: #E2E5E9;
   border-radius: 8px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   position: absolute;
   width: 300px;
   padding: 10px;
-  z-index: 1;
   display: none;
   top: 135%;
   color: black;
+  z-index: 2;
 }
 
-.subir-post-dropdown form {
+.subir-post-dropdown form, .subir-post-dropdownMB form {
   padding: 0;
   flex-direction: column;
 }
 
-.subir-post-dropdown textarea {
+.subir-post-dropdown textarea, .subir-post-dropdownMB textarea {
   margin: 10px 1px 8px 1px;
 }
 
@@ -451,6 +459,7 @@ label {
   flex-direction: column;
   gap: 20px;
   margin-top: 20px;
+  line-height: normal;
 }
 
 .caja-sugerencias img, .comentario-contenido img, .caja-notificaciones img {
@@ -496,8 +505,9 @@ label {
 
 
 /* HTML DE LA PAGINA DE CONFIGURACION */
-.config-body {
-  background-color: #242424;
+
+#search-b {
+  line-height: unset;
 }
 
 .lista-config {
@@ -572,7 +582,8 @@ label {
 
 .config-perfil input[type="file"],
 .config-perfil textarea,
-.subir-post-dropdown textarea   {
+.subir-post-dropdown textarea, 
+.subir-post-dropdownMB textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -588,6 +599,7 @@ label {
   cursor: pointer;
   background-color: #333;
   color: #fff;
+  margin-top: 5px;
 }
 
 .config-btn:hover {
@@ -674,14 +686,7 @@ label {
   margin-top: 10px;
 }
 
-.discord p {
-  margin-bottom: 5px;
-}
-
 /* HTML DE LA PAGINA DE BUSQUEDA */
-.busqueda-body {
-  background-color: #242424;
-}
 
 .busqueda-header input[type="text"] {
   width: auto;
@@ -757,10 +762,6 @@ label {
 }
 
 /* HTML DE LA PAGINA DE PERFIL */
-.perfil-body {
-  line-height: 1;
-  background-color: #242424;
-}
 
 .perfil-nav {
   padding: 20px;
@@ -946,14 +947,18 @@ label {
 }
 
 .perfil-post-nombre ul, .perfil-fecha ul, .perfil-post-likes ul {
-  white-space: nowrap;
   margin-left: 7px;
   color:#B0B3B8;
 }
 
-.perfil-post-nombre bold {
+.perfil-post-nombre bold, .perfil-post-nombre a {
   font-size: 17px;
   color: white;
+  cursor: pointer;
+}
+
+.discord p {
+  margin-bottom: 20px;
 }
 
 .perfil-fecha ul {
@@ -1004,7 +1009,7 @@ label {
   margin-right: 30px;
 }
 
-.post-dropbtn, .borrar-com-btn, .like-btn, .mostrar-mas, .mostrar-menos, .delete-button, .subir-post-btn, .noti-btn, .delete-post-btn, .borrar-btn {
+.post-dropbtn, .borrar-com-btn, .like-btn, .mostrar-mas, .mostrar-menos, .delete-button, .subir-post-btn, .noti-btn, .delete-post-btn, .borrar-btn, .sugerencias-btn {
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -1056,4 +1061,277 @@ body {
   box-sizing: border-box;
   font-size: 15px;
   line-height: 27px;
+  background-color:#242424;
+}
+
+/* Telefonos */
+@media (max-width: 768px) {
+  body {
+    zoom:75%
+  }
+
+  .config-header, .logear-header, .perfil-header {
+    flex-direction: column;
+  }
+
+  .icon {
+    width: 25px;
+    height: 25px;
+  }
+
+  .config-orden h2 {
+    margin-bottom: 10px;
+  }
+  
+  .nav-footer {
+    padding: 10px 0px 10px 0px;
+    position: fixed;
+  }
+
+  #nav-footer {
+    display: block;
+  }
+
+  form {
+    padding: 0;
+  }
+
+  #header-pc {
+    display: none;
+  }
+/* Busqueda html */
+  .busqueda-header {
+    padding: 10px 0px 10px 0px;
+    justify-content: space-around;
+  }
+
+  .busqueda-header h4 {
+    margin: 10px 15px 10px 0px;
+  }
+
+  .busqueda-header input[type="text"] {
+    margin: 0px 0px 10px 10px;
+  }
+
+  .busqueda-contenido {
+    gap: 15px;
+  }
+
+  .busqueda-perfiles {
+    margin-bottom: 100px;
+  }
+
+  #search-l {
+    width: 40%;
+    position: sticky;
+    top: 10px
+  }
+
+  .busqueda-resultado-perfil {
+    width: 100%;
+    padding: 10px;
+  }
+
+/* Logear html */
+  .logear-btn-registro, .logear-btn-entrar {
+    margin: 10px 0;
+  }
+
+  .logear-contenido h1 {
+    margin-bottom: 10px;
+  }
+
+/* Perfil html */
+  .perfil-detalles {
+    padding: 10px;
+    margin-top: 20px;
+    gap: 20px;
+  }
+
+  .perfil-bio b, .perfil-locacion b, .perfil-fecha-unida b {
+    font-size: 15px;
+  }
+
+  .perfil-publicaciones-container, .perfil-publicaciones-container-index {
+    margin-bottom: 100px;
+    width: 100%;
+  }
+
+  .perfil-publicaciones-container {
+    width: 55%;
+  }
+
+  .seguir-btn {
+    font-size: 11px;
+    padding: 10px 9px;
+  }
+
+  .perfil-user-avatar img {
+    width: 85px;
+    height: 85px;
+    border: rgb(136, 136, 136) 3px solid;
+  }
+
+  .perfil-posts img, .perfil-posts video, .index-perfil-posts img {
+    height: auto;
+  }
+
+  .perfil-user-info h5 {
+    font-size: 20px;
+  }
+
+  .perfil-header h1 {
+    padding: 10px 0px 10px 0px;
+  }
+  
+  .perfil-user-info ul {
+    padding-left: 2%;
+  }
+
+  .perfil-nav-info span {
+    padding-left: 3%;
+  }
+
+  .perfil-user-informacion {
+    width: 30%;
+    line-height: 25px;
+  }
+
+  .perfil-banner img {
+    height: 200px;
+  }
+
+/* Config  html */
+  #banner-pic, #banner-pic-preview, #banner-crop-container {
+    width: 100%;
+    height: 90px;
+  }
+
+  .borrar-cuenta-btn {
+    margin: 10px 0px 0px 0px;
+    padding: 10px 15px;
+  }
+
+  .lista-config {
+    width: 30%;
+  }
+
+  .config-contenido {
+    gap: 10px;
+  }
+
+  .config-perfil form {
+    grid-template-columns: 1fr;
+  }
+
+  .config-perfil, .busqueda-perfiles {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .config-perfil input[type="text"], .config-perfil input[type="email"], .busqueda-header input[type="text"] {
+    width: 100%;
+  }
+
+  .perfil-pic-caja {
+    width: 90px;
+    height: 90px;
+  }
+
+  .perfil-banner-caja {
+    width: 80%;
+    height: 50px;
+  }
+
+  .perfil-pic-container p {
+    font-size: 12px;
+  }
+
+  .perfil-pic-container {
+    margin-bottom: 10px;
+  }
+
+  #crop-banner-btn {
+    top: 50%;
+    position: relative
+  }
+
+/* Index html */
+  .fileInput {
+    width: 100px;
+  }
+
+  .comentario-info {
+    width: 100%;
+  }
+
+  .post-dropdown-contenido, .com-dropdown-contenido {
+    width: 50px;
+    padding: 2px 15px 2px 15px;
+  }
+
+  .com-dropdown-contenido {
+    padding: 3px 10px 3px 10px;
+  }
+  
+  .dropdown-contenidoMB, .dropdown-notificacionesMB, .subir-post-dropdownMB, .perfiles-sugerencias {
+    bottom: 150%;
+    top: unset;
+  }
+
+  .dropdown-notificacionesMB {
+    width: 250px;
+    left: 1px;
+  }
+
+  .caja-notificaciones {
+    margin: 15px 0px 0px 0px;
+  }
+
+  .subir-post-dropdownMB {
+    width: 220px;
+    left: 170%;
+  }
+
+  .caja-notificaciones img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0;
+    border: rgb(136, 136, 136) 2px solid;
+  }
+
+  .delete-button {
+    margin: 0;
+    padding: 0px 0px 0px 60px;
+  }
+
+  .drop-info {
+    line-height: 18px
+  }
+
+  .drop-info b, .drop-info span {
+    font-size: 12px;
+  }
+
+  .perfiles-sugerencias {
+    position: absolute;
+    width: 80%;
+    display: none;
+    right: 6%;
+    margin: 0;
+  }
+
+  .sugerencias-contenido div {
+    align-items: flex-start;
+  }
+
+  .show-suge {
+    display: block;
+  }
+
+  .items-mb {
+    gap: 40px;
+    justify-content: space-evenly;
+  }
 }

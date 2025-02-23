@@ -13,43 +13,44 @@
 
 </head>
 
-<body class="logear-body">
-    <!-- Header-->
-    <div class="logear-header">
-        <b><h1>「CA」 Colombia ER:LC </h1></b>
-        <a href="/signin" class="logear-btn-registro">Logearse</a>
-    </div>
+<body>
+    <div class="l-body" id="sign-b">
+        <!-- Header-->
+        <div class="logear-header">
+            <b><h1>「CA」 Colombia ER:LC </h1></b>
+            <a href="/signin" class="logear-btn-registro">Logearse</a>
+        </div>
 
-    <!-- Contenido principal container-->
-    <div class="logear-contenido">
-        <h1> Registrarse</h1>
-        <!-- Forms-->
-            <form action="" method="POST">
-                {% csrf_token %}
-                <input type="text" name="username" placeholder="Nombre" required minlength="2" maxlength="16" class="logear-form-nombre" pattern="^[a-zA-Z_]+$" title="El nombre de usuario solo puede contener letras y guiones bajos.">
-                <input type="email" name="email" placeholder="Email" required class="logear-form-email">
-                <input type="password" name="password" placeholder="Contraseña" required class="logear-form-contraseña">
-                <input type="password" name="password2" placeholder="Confirmar contraseña" required class="logear-form-contraseña">
-                <!-- Boton-->
-                <button type="submit" class="logear-btn-entrar">Registrarse</button>
-                <!-- Mensaje de error confirmacion -->
-                <div class="logear-mensaje-error">
-                    {% if messages %}
-                        {% for message in messages %}
-                        <h5>{{ message }}</h5>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                <div>
-                    <p> Ya tienes una cuenta? <a href="/signin"> Entrar </a></p>
-                </div>
-            </form> 
+        <!-- Contenido principal container-->
+        <div class="logear-contenido">
+            <h1> Registrarse</h1>
+            <!-- Forms-->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="username" placeholder="Nombre" required minlength="2" maxlength="16" class="logear-form-nombre" pattern="^[a-zA-Z_]+$" title="El nombre de usuario solo puede contener letras y guiones bajos.">
+                    <input type="email" name="email" placeholder="Email" required class="logear-form-email">
+                    <input type="password" name="password" placeholder="Contraseña" required class="logear-form-contraseña">
+                    <input type="password" name="password2" placeholder="Confirmar contraseña" required class="logear-form-contraseña">
+                    <!-- Boton-->
+                    <button type="submit" class="logear-btn-entrar">Registrarse</button>
+                    <!-- Mensaje de error confirmacion -->
+                    <div class="logear-mensaje-error">
+                        {% if messages %}
+                            {% for message in messages %}
+                            <h5>{{ message }}</h5>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p> Ya tienes una cuenta? <a href="/signin"> Entrar </a></p>
+                    </div>
+                </form> 
+        </div>
     </div>
-
     <!-- Footer-->
     <footer>
-        <p> ©️ Todos los derechos reservados, leyui (Programadora)</p>
-        <p> ©️ Todos los derechos reservados, 「CA」 Colombia ER:LC</p>
+        <a href="https://discordapp.com/users/943008613193109514" target="_blank" id="sign-a"><p> ©️ Todos los derechos reservados, leyui (Programadora)</p></a>
+        <a href="https://discord.gg/cacolombiarp" target="_blank" id="sign-a"><p> ©️ Todos los derechos reservados, 「CA」 Colombia ER:LC</p></a>
     </footer>
 
     <!-- Scripts

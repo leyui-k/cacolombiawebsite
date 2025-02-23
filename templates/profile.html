@@ -10,199 +10,217 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body class="perfil-body">
-
-	<!-- Header -->
-	<header class="perfil-header">
-	<h1>Perfil de {{user_profile.user.username}}</h1>
-		<div class="dropdown">
-			<button class="dropbtn" onclick="toggleDropdown()">
-				<img src="{{ MEDIA_URL }}{{ request_user_profile.profileimg.url }}" alt="Perfil" class="perfil-icon">
-				{{ request.user.username }}
-			</button>
-			<div class="dropdown-contenido" id="dropdown-contenido">
-				<a id="cuenta" href="/settings">Configuracion</a>
-				<a id="volver" href="/">Volver</a>
-				<a id="salir" href="/logout">Salir</a>
-			</div>
-		</div>
-	</header>
-	
-	<!-- Banner -->
-	<div class="perfil-banner">
-        {% if user_profile.bannerimg %}
-            <img src="{{ user_profile.bannerimg.url }}">
-        {% endif %}
-    </div>
-
-	<!-- Perfil nav -->
-	<div class="perfil-nav">
-		<form action="/follow" method="POST">
-			{% csrf_token %}
-			<!-- Avatar -->
-			<div class="perfil-user">
-				<div class="perfil-user-avatar">
-						<img src="{{ user_profile.profileimg.url }}">
-				</div>
-				<!-- Nombre -->
-				<div class="perfil-user-info">
-					<ul>
-						<h5><b>@{{user_profile.user.username}}
-							{% if user_profile.discord_username %}
-								({{ user_profile.discord_username }})
-							{% endif %}
-							{% if user_profile.user.is_staff %} (Staff)
-                                {% elif user_profile.user.is_superuser %} (Admin)
-                            {% endif %}
-							
-						</b></h5>
-					</ul>
-					<!-- Seguidores -->
-						<div class="perfil-nav-info" >
-							<ul >
-								<span><b>{{user_followers}}
-								{% if user_followers == 1 %}seguidor &nbsp•&nbsp {{user_following}} siguiendo
-								{% else %}seguidores &nbsp•&nbsp {{user_following}} siguiendo
-								{% endif %}
-								</b></span>
-								<input type="hidden" value="{{user.username}}" name="follower" />
-								<input type="hidden" value="{{user_object.username}}" name="user" />
-							</ul>
-						</div>
+<body>
+	<div class="l-body">
+		<!-- Header -->
+		<header class="perfil-header">
+		<h1>Perfil de {{user_profile.user.username}}</h1>
+			<div class="dropdown" id="header-pc">
+				<button class="dropbtn" onclick="toggleDropdown()">
+					<img src="{{ MEDIA_URL }}{{ request_user_profile.profileimg.url }}" alt="Perfil" class="perfil-icon">
+					{{ request.user.username }}
+				</button>
+				<div class="dropdown-contenido" id="dropdown-contenido">
+					<a id="cuenta" href="/settings">Configuracion</a>
+					<a id="volver" href="/">Volver</a>
+					<a id="salir" href="/logout">Salir</a>
 				</div>
 			</div>
-			<!-- Boton seguir -->
-			{% if user_object.username != user.username %}
-				<a><button class="seguir-btn" type="submit">{{button_text}}</button></a>
+		</header>
+		
+		<!-- Banner -->
+		<div class="perfil-banner">
+			{% if user_profile.bannerimg %}
+				<img src="{{ user_profile.bannerimg.url }}">
 			{% endif %}
-		</form>
-	</div>
+		</div>
 
-	<!-- Caja principal -->
-	 	<div class="perfil-detalles">
-			<!-- Inormacion del usuario - Caja izquierda -->
-			<div class="perfil-user-informacion">
-				<h3>Detalles</h3>
-					<!-- Bio -->
-					{% if user_profile.bio %}
-						<div class="perfil-bio">
-							<p><b>{{user_profile.bio}}</b></p>
-						</div>
-					{% endif %}
-					<!-- Locacion -->
-					{% if user_profile.location %}
-						<div class="perfil-locacion">
+		<!-- Perfil nav -->
+		<div class="perfil-nav">
+			<form action="/follow" method="POST">
+				{% csrf_token %}
+				<!-- Avatar -->
+				<div class="perfil-user">
+					<div class="perfil-user-avatar">
+							<img src="{{ user_profile.profileimg.url }}">
+					</div>
+					<!-- Nombre -->
+					<div class="perfil-user-info">
+						<ul>
+							<h5><b>@{{user_profile.user.username}}
+								{% if user_profile.discord_username %}
+									({{ user_profile.discord_username }})
+								{% endif %}
+								{% if user_profile.user.is_staff %} (Staff)
+									{% elif user_profile.user.is_superuser %} (Admin)
+								{% endif %}
+								
+							</b></h5>
+						</ul>
+						<!-- Seguidores -->
+							<div class="perfil-nav-info" >
+								<ul >
+									<span><b>{{user_followers}}
+									{% if user_followers == 1 %}seguidor &nbsp•&nbsp {{user_following}} siguiendo
+									{% else %}seguidores &nbsp•&nbsp {{user_following}} siguiendo
+									{% endif %}
+									</b></span>
+									<input type="hidden" value="{{user.username}}" name="follower" />
+									<input type="hidden" value="{{user_object.username}}" name="user" />
+								</ul>
+							</div>
+					</div>
+				</div>
+				<!-- Boton seguir -->
+				{% if user_object.username != user.username %}
+					<a><button class="seguir-btn" type="submit">{{button_text}}</button></a>
+				{% endif %}
+			</form>
+		</div>
+
+		<!-- Caja principal -->
+			<div class="perfil-detalles">
+				<!-- Inormacion del usuario - Caja izquierda -->
+				<div class="perfil-user-informacion">
+					<h3>Detalles</h3>
+						<!-- Bio -->
+						{% if user_profile.bio %}
+							<div class="perfil-bio">
+								<p><b>{{user_profile.bio}}</b></p>
+							</div>
+						{% endif %}
+						<!-- Locacion -->
+						{% if user_profile.location %}
+							<div class="perfil-locacion">
+								<p><b>
+									<svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="#B0B3B8" viewBox="0 0 16 16">
+										<path d="M8 0L0 6V8H1V15H4V10H7V15H15V8H16V6L14 4.5V1H11V2.25L8 0ZM9 10H12V13H9V10Z"/>
+									</svg> Vive en <bold>{{user_profile.location}}</bold>
+								</b></p>
+							</div>
+						{% endif %}
+						<!-- Fecha en la que se unio el usuario -->
+						<div class="perfil-fecha-unida">
 							<p><b>
-								<svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="#B0B3B8" viewBox="0 0 16 16">
-									<path d="M8 0L0 6V8H1V15H4V10H7V15H15V8H16V6L14 4.5V1H11V2.25L8 0ZM9 10H12V13H9V10Z"/>
-								</svg> Vive en <bold>{{user_profile.location}}</bold>
+								<svg class="icon" viewBox="0 0 16 16" fill="#B0B3B8" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM7 3V8.41421L10.2929 11.7071L11.7071 10.2929L9 7.58579V3H7Z"/>
+								</svg> Se unio en: <bold>{{ user_profile.user.date_joined|date:"F Y"|capfirst }}</bold>
 							</b></p>
 						</div>
-					{% endif %}
-					<!-- Fecha en la que se unio el usuario -->
-					<div class="perfil-fecha-unida">
-						<p><b>
-							<svg class="icon" viewBox="0 0 16 16" fill="#B0B3B8" xmlns="http://www.w3.org/2000/svg">
-								<path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM7 3V8.41421L10.2929 11.7071L11.7071 10.2929L9 7.58579V3H7Z"/>
-							</svg> Se unio en: <bold>{{ user_profile.user.date_joined|date:"F Y"|capfirst }}</bold>
-						</b></p>
-					</div>
-					
-			</div>
+						
+				</div>
 
-			<!-- Caja de publicaciones -->
-			<div class="perfil-publicaciones-container">
-				<h3>Publicaciones</h3>
-				{% for post in user_posts %}
-				<div class="perfil-publicaciones" data-post-id="{{ post.id }}">
-					<div class="perfil-post-user">
-						<!-- Avatar -->
-						<div class="perfil-post-avatar">
-							<img src="{{ user_profile.profileimg.url }}">
-						<!-- Nombre -->
-							<div class="perfil-post-nombre"> 
-								<ul>
-									<bold>{{user_profile.user.username}}</bold> subio un nuevo post	
-								</ul>
-								<!-- Fecha -->
-								<div class="perfil-fecha">
+				<!-- Caja de publicaciones -->
+				<div class="perfil-publicaciones-container">
+					<h3>Publicaciones</h3>
+					{% for post in user_posts %}
+					<div class="perfil-publicaciones" data-post-id="{{ post.id }}">
+						<div class="perfil-post-user">
+							<!-- Avatar -->
+							<div class="perfil-post-avatar">
+								<img src="{{ user_profile.profileimg.url }}">
+							<!-- Nombre -->
+								<div class="perfil-post-nombre"> 
 									<ul>
-										<h2>{{post.created_at|date:"d M y"}}</h2>
+										<bold>{{user_profile.user.username}}</bold> subio un nuevo post	
 									</ul>
+									<!-- Fecha -->
+									<div class="perfil-fecha">
+										<ul>
+											<h2>{{post.created_at|date:"d M y"}}</h2>
+										</ul>
+									</div>
 								</div>
 							</div>
-						</div>
-						<!-- 3 botones - dropmenu -->
-						{% if post.user == request.user.username %}
-						<div class="perfil-dropbtn-post">
-							<button class="post-dropbtn" onclick="togglePostDropdown('{{ post.id }}')">
-								<svg xmlns="http://www.w3.org/2000/svg" class="post-dropbtn" width="16" height="16" fill="white" viewBox="0 0 16 16">
-									<path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-								</svg>
-							</button>
-							<div class="post-dropdown-contenido" id="post-dropdown-contenido-{{ post.id }}">
-									<form class="delete-post-form" data-post-id="{{ post.id }}">
-									{% csrf_token %}
-									<button type="button" class="delete-post-btn">Eliminar Post</button>
-								</form>
+							<!-- 3 botones - dropmenu -->
+							{% if post.user == request.user.username %}
+							<div class="perfil-dropbtn-post">
+								<button class="post-dropbtn" onclick="togglePostDropdown('{{ post.id }}')">
+									<svg xmlns="http://www.w3.org/2000/svg" class="post-dropbtn" width="16" height="16" fill="white" viewBox="0 0 16 16">
+										<path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+									</svg>
+								</button>
+								<div class="post-dropdown-contenido" id="post-dropdown-contenido-{{ post.id }}">
+										<form class="delete-post-form" data-post-id="{{ post.id }}">
+										{% csrf_token %}
+										<button type="button" class="delete-post-btn">Eliminar Post</button>
+									</form>
+								</div>
 							</div>
+							{% endif %}
+						</div>
+						<!-- Descripcion del post -->
+						{% if post.caption %}
+						<div class="perfil-post-caption">
+							<p>{{post.caption}}</p>
 						</div>
 						{% endif %}
-					</div>
-					<!-- Descripcion del post -->
-					{% if post.caption %}
-					<div class="perfil-post-caption">
-						<p>{{post.caption}}</p>
-					</div>
-					{% endif %}
-					<!-- Imagen de la publicacion -->
-					<div class="perfil-posts">
-						<!-- Controlador de video o gif -->
-						{% if post.video %} {% if post.is_gif %}
-							<img href="{{ post.image.url }}" src="{{ post.image.url }}">
-						{% else %}
-							<video controls href="{{ post.video.url }}">
-								<source src="{{ post.video.url }}" type="video/mp4">
-							</video>
-						{% endif %}
-						<!-- Controlador de imagen -->					
-						{% elif post.image %}
-							<img href="{{ post.image.url }}" src="{{ post.image.url }}">
-						{% endif %}
-					</div>
-					<!-- Caja inferior -->
-					<div class="perfil-post-bottom">
-						<!-- Numero de personas que le dieron like -->
-						<div class="perfil-post-likes" data-post-id="{{ post.id }}"> 
-							<ul>
-								<bold>
-									{% if post.no_of_likes == 1 %}
-									{{post.no_of_likes}} le dio like
+						<!-- Imagen de la publicacion -->
+						<div class="perfil-posts">
+							<!-- Controlador de video o gif -->
+							{% if post.video %} {% if post.is_gif %}
+								<img href="{{ post.image.url }}" src="{{ post.image.url }}">
+							{% else %}
+								<video controls href="{{ post.video.url }}">
+									<source src="{{ post.video.url }}" type="video/mp4">
+								</video>
+							{% endif %}
+							<!-- Controlador de imagen -->					
+							{% elif post.image %}
+								<img href="{{ post.image.url }}" src="{{ post.image.url }}">
+							{% endif %}
+						</div>
+						<!-- Caja inferior -->
+						<div class="perfil-post-bottom">
+							<!-- Numero de personas que le dieron like -->
+							<div class="perfil-post-likes" data-post-id="{{ post.id }}"> 
+								<ul>
+									<bold>
+										{% if post.no_of_likes == 1 %}
+										{{post.no_of_likes}} le dio like
+										{% else %}
+										{{post.no_of_likes}} le dieron like
+										{% endif %}
+									</bold>
+								</ul>
+							</div>
+							{% if post.user != request.user.username %}
+							<!-- Separador -->
+								<hr class="solid">
+							<!-- Boton de like -->
+							<div class="perfil-post-btn-caja" data-post-id="{{ post.id }}"> 
+								<button class="like-btn" data-post-id="{{ post.id }}" id="like-btn">
+									{% if request.user in post.likes.all %}
+										<span>❤️ Me gusta</span>
 									{% else %}
-									{{post.no_of_likes}} le dieron like
+										<span>🤍 Me gusta</span>
 									{% endif %}
-								</bold>
-							</ul>
+								</button>
+							</div>
+							{% endif %}
 						</div>
-						{% if post.user != request.user.username %}
-						<!-- Separador -->
-							<hr class="solid">
-						<!-- Boton de like -->
-						<div class="perfil-post-btn-caja" data-post-id="{{ post.id }}"> 
-							<button class="like-btn" data-post-id="{{ post.id }}" id="like-btn">
-								{% if request.user in post.likes.all %}
-									<span>❤️ Me gusta</span>
-								{% else %}
-									<span>🤍 Me gusta</span>
-								{% endif %}
-							</button>
-						</div>
-						{% endif %}
+					</div>
+					{% endfor %}
+				</div>
+			</div>		
+	</div>
+	
+    <!-- Nav desde vista de telefonos -->
+	<footer class="nav-footer" id="nav-footer">
+			<div class="items-mb">
+			<!-- Perfil -->
+				<div class="dropdown">
+					<button class="dropbtn" onclick="toggleDropdownMB()">
+						<img src="{{ MEDIA_URL }}{{ user_profile.profileimg.url }}" alt="Perfil" class="perfil-icon">
+						{{ user_profile.user.username }}
+					</button>
+					<div class="dropdown-contenidoMB" id="dropdown-contenidoMB">
+						<a id="cuenta" href="/settings">Configuracion</a>
+						<a id="volver" href="/">Volver</a>
 					</div>
 				</div>
-				{% endfor %}
 			</div>
-		</div>		
+	</footer>
 
 	<!-- Scripts -->
     <script src="{% static 'assets/js/config.js' %}"></script>
